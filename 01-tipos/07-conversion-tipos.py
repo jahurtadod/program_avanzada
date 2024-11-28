@@ -1,21 +1,54 @@
-x = input("")
+#Sistema mejorado por Nicole Calvas
+# Solicitar entrada al usuario
+x = input("Ingresa un valor: ")
 
-# Convertimos a diferentes tipos de datos
-numero_entero = int(x)  # Convierte el string a un número entero
-numero_flotante = float(x)  # Convierte el string a un número flotante
-texto = str(x)  # Convierte el string a texto (aunque ya es texto)
-valor_booleano = bool(x)  # Convierte el string a un valor booleano
+# Validar y convertir el valor a diferentes tipos de datos
+try:
+    # Intentar convertir el string a un número entero
+    numero_entero = int(x)
+except ValueError:
+    # Si no es un número entero, asignar None
+    numero_entero = None
 
-print(f"Entrada original: {x}")
-print(f"Como entero: {numero_entero}")
-print(f"Como flotante: {numero_flotante}")
-print(f"Como string: {texto}")
+try:
+    # Intentar convertir el string a un número flotante
+    numero_flotante = float(x)
+except ValueError:
+    # Si no es un número flotante, asignar None
+    numero_flotante = None
+
+# Convertir el valor a un string (esto siempre es válido)
+texto = str(x)
+
+# Evaluar el valor booleano de la entrada
+# Nota: bool(x) es True para cualquier entrada no vacía, excepto valores como "" o 0
+valor_booleano = bool(x)
+
+# Mostrar los resultados al usuario
+print(f"\nEntrada original: '{x}'")
+if numero_entero is not None:
+    print(f"Como entero: {numero_entero}")
+else:
+    print("Como entero: No válido (no es un número entero)")
+
+if numero_flotante is not None:
+    print(f"Como flotante: {numero_flotante}")
+else:
+    print("Como flotante: No válido (no es un número flotante)")
+
+print(f"Como string: '{texto}'")
 print(f"Como booleano: {valor_booleano}")
 
-# Datos en Falsy -> "" 0 None
+# Explicación adicional sobre valores booleanos en Python
+print("\nEjemplos de evaluación booleana:")
+print(f"bool(''): {bool('')}  # Cadena vacía -> False")
+print(f"bool('0'): {bool('0')}  # Cadena con '0' -> True (cadena no vacía)")
+print(f"bool(None): {bool(None)}  # None -> False")
+print(f"bool(' '): {bool(' ')}  # Espacio en blanco -> True (cadena no vacía)")
+print(f"bool(0): {bool(0)}  # Cero -> False (valor numérico Falsy)")
 
-print(bool(""))  # Cadena vacía -> False
-print(bool("0"))  # Cadena con un '0' -> True (no es vacío, es un string no vacío)
-print(bool(None))  # None -> False (ningún valor asignado)
-print(bool(" "))  # Espacio vacío -> True (es un string no vacío)
-print(bool(0))  # Cero -> False (es el valor falso en números)
+# Proporcionar una salida clara para usuarios que no conozcan los conceptos técnicos
+print("\nNotas:")
+print("- Un string vacío ('') se evalúa como False en booleanos.")
+print("- Cualquier string no vacío (incluido '0' o ' ') se evalúa como True.")
+print("- El número 0 se evalúa como False, mientras que otros números son True.")
