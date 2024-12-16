@@ -1,44 +1,17 @@
-# Defina una función que nos permita determinar si una variable
-# es un palindromo
-def palindromo(texto):
-    texto_sin_espacios = remote_space(texto.lower())
-    texto_invertido = reverse(texto_sin_espacios)
-
-    if (texto_invertido == texto_sin_espacios):
-        return "es un palindromo"
-    else:
-        return "no es un palindromo"
-
-
-def reverse(texto):
-    texto_invertido = ""
-    for chart in texto:
-        texto_invertido = chart + texto_invertido
-    return texto_invertido
-
-
-def remote_space(texto):
-    nuevo_texto = ""
-    for char in texto:
-        if char != "":
-            nuevo_texto += char
-    return nuevo_texto
-
-
-def palindromoAvanzado(texto):
-    # Convertimos todo el texto a minúsculas para que sea insensible a mayúsculas
-    texto = texto.lower()
-
-    # Eliminamos espacios para que no interfieran en la verificación
-    texto = texto.replace(" ", "")
+def es_palindromo(texto):
+    # Convertimos todo el texto a minúsculas y eliminamos espacios
+    texto_sin_espacios = texto.lower().replace(" ", "")
+    
+    # Invertimos el texto
+    texto_invertido = texto_sin_espacios[::-1]
 
     # Verificamos si el texto es igual a su reverso
-    if texto == texto[::-1]:
-        return "Es un palíndromo"
+    if texto_invertido == texto_sin_espacios:
+        return "es un palíndromo"
     else:
-        return "No es un palíndromo"
+        return "no es un palíndromo"
 
-
-print("Abba", palindromo("Abba"))
-print("Reconocer", palindromo("reconocer"))
-print("Hola mundo", palindromo("Hola mundo"))
+# Pruebas
+print("Abba:", es_palindromo("Abba"))
+print("Reconocer:", es_palindromo("reconocer"))
+print("Hola mundo:", es_palindromo("Hola mundo"))
