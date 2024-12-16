@@ -1,59 +1,53 @@
-# Genere una calculadora avanzada
-# Considere execciones por ejemplo si el usuario quiere ingresar letras
-
-print("Bienvenido a la calculadora")
-
-opreciones = ["+", "-", ...]
-
-while True:
-    n1 = input("Ingresa el número 1 (o escribe 'salir' para terminar): ")
-    if n1.lower() == "salir":
-        print("Programa terminado.")
-        break
-
-    # Verificar que n1 sea un número válido
+def es_numero_valido(entrada):
     try:
-        n1 = float(n1)
+        return float(entrada)
     except ValueError:
-        print("Por favor, ingresa un número válido.")
-        continue
+        return None
 
-    oper = input(
-        "Ingresa la operación (+, -, *, /) o escribe 'salir' para terminar: ")
-    if oper.lower() == "salir":
-        print("Programa terminado.")
-        break
-
-    # Validar operación
-    if oper not in opreciones:
+def obtener_operacion():
+    operaciones = ["+", "-", "*", "/"]
+    while True:
+        oper = input("Ingresa la operación (+, -, *, /) o escribe 'salir' para terminar: ")
+        if oper.lower() == "salir":
+            return None
+        if oper in operaciones:
+            return oper
         print("Operación no válida. Intenta con +, -, * o /.")
-        continue
 
-    n2 = input("Ingresa el número 2 (o escribe 'salir' para terminar): ")
-    if n2.lower() == "salir":
-        print("Programa terminado.")
-        break
+def calculadora():
+    print("Bienvenido a la calculadora")
 
-    # Verificar que n2 sea un número válido
-    try:
-        n2 = float(n2)
-    except ValueError:
-        print("Por favor, ingresa un número válido.")
-        continue
+    while True:
+        n1 = input("Ingresa el número 1 (o escribe 'salir' para terminar): ")
+        if n1.lower() == "salir":
+            print("Programa terminado.")
+            break
 
-    resultado = ""
-    # Realizar la operación
-    if oper == '+':
-        resultado = n1 + n2
-    elif oper == '-':
-        resultado = n1 - n2
-    elif oper == '*':
-        resultado = n1 * n2
-    elif oper == '/':
-        # Manejar división entre cero
-        if n2 == 0:
+        n1 = es_numero_valido(n1)
+        if n1 is None:
+            print("Por favor, ingresa un número válido.")
+            continue
+
+        oper = obtener_operacion()
+        if oper is None:
+            print("Programa terminado.")
+            break
+
+        n2 = input("Ingresa el número 2 (o escribe 'salir' para terminar): ")
+        if n2.lower() == "salir":
+            print("Programa terminado.")
+            break
+
+        n2 = es_numero_valido(n2)
+        if n2 is None:
+            print("Por favor, ingresa un número válido.")
+            continue
+
+        if oper == '/' and n2 == 0:
             print("Error: no se puede dividir entre cero.")
             continue
-        resultado = n1 / n2
 
-    print(f"El resultado de {n1} {oper} {n2} es: {resultado}")
+        resultado = eval(f"{n1} {oper} {n2}")
+        print(f"El resultado de {n1} {oper} {n2} es: {resultado}")
+
+calculadora()
