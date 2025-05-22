@@ -1,59 +1,79 @@
-# Genere una calculadora avanzada
-# Considere execciones por ejemplo si el usuario quiere ingresar letras
+# 01-Calculadora-avanzada.py
+# Calculadora Avanzada y Mejorada por stefany sancho 
 
-print("Bienvenido a la calculadora")
+print("Bienvenido a la calculadora mejorada")
 
-opreciones = ["+", "-", ...]
+def mostrar_menu():
+    print("\n=== Calculadora Avanzada y Mejorada ===")
+    print("Operaciones disponibles: + -  *  /")
+    print("Escribe 'salir' en cualquier momento para terminar\n")
 
-while True:
-    n1 = input("Ingresa el número 1 (o escribe 'salir' para terminar): ")
-    if n1.lower() == "salir":
-        print("Programa terminado.")
-        break
+ 
+# Mejoras Función para pedir un número al usuario, con manejo de excepciones
+def obtener_numero(mensaje):
+    while True:
+        entrada = input(mensaje)
+        if entrada.lower() == "salir":
+            return "salir"
+        
+        # Validar si la entrada es un número 
+        # Se usa try/except para que la aplicación no se rompa si el usuario pone letras 
+        try:
+            return float(entrada)
+        except ValueError:
+            print(" Error: Ingrese un número válido.")
 
-    # Verificar que n1 sea un número válido
+     # Mejoras Función para una operación válida
+def obtener_operacion(operaciones):
+    while True:
+        oper = input("Ingresa la operación (+, -, *, /): ")
+        if oper.lower() == "salir":
+            return "salir"
+        if oper in operaciones:
+            return oper
+        else:
+            print(" Operación no válida. Usa solo: +, -, *, /")
+
+  # Mejoras Función para calcular el resultado 
+  # incluye validación de división entre cero
+
+def calcular(n1, n2, oper):
     try:
-        n1 = float(n1)
-    except ValueError:
-        print("Por favor, ingresa un número válido.")
-        continue
+        operaciones = {
+            "+": lambda a, b: a + b,
+            "-": lambda a, b: a - b,
+            "*": lambda a, b: a * b,
+            "/": lambda a, b: a / b if b != 0 else "Error: División por cero"
+        }
+        resultado = operaciones[oper](n1, n2)
+        return resultado
+    except Exception as e:
+        return f"Error inesperado: {e}"
+    
+# Mejoras realizadas usa funciones y control de bucles
+         
+def main():
+    mostrar_menu()
+    operaciones_validas = ("+", "-", "*", "/")  
 
-    oper = input(
-        "Ingresa la operación (+, -, *, /) o escribe 'salir' para terminar: ")
-    if oper.lower() == "salir":
-        print("Programa terminado.")
-        break
+    while True:
+        n1 = obtener_numero("Ingresa el número 1: ")
+        if n1 == "salir":
+            break
 
-    # Validar operación
-    if oper not in opreciones:
-        print("Operación no válida. Intenta con +, -, * o /.")
-        continue
+        oper = obtener_operacion(operaciones_validas)
+        if oper == "salir":
+            break
 
-    n2 = input("Ingresa el número 2 (o escribe 'salir' para terminar): ")
-    if n2.lower() == "salir":
-        print("Programa terminado.")
-        break
+        n2 = obtener_numero("Ingresa el número 2: ")
+        if n2 == "salir":
+            break
 
-    # Verificar que n2 sea un número válido
-    try:
-        n2 = float(n2)
-    except ValueError:
-        print("Por favor, ingresa un número válido.")
-        continue
+        resultado = calcular(n1, n2, oper)
+        print(f" Resultado de {n1} {oper} {n2} = {resultado}")
 
-    resultado = ""
-    # Realizar la operación
-    if oper == '+':
-        resultado = n1 + n2
-    elif oper == '-':
-        resultado = n1 - n2
-    elif oper == '*':
-        resultado = n1 * n2
-    elif oper == '/':
-        # Manejar división entre cero
-        if n2 == 0:
-            print("Error: no se puede dividir entre cero.")
-            continue
-        resultado = n1 / n2
+    print("\nGracias por usar la calculadora. ¡Hasta pronto!")
 
-    print(f"El resultado de {n1} {oper} {n2} es: {resultado}")
+
+if __name__ == "__main__":
+    main()
